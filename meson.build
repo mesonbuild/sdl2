@@ -1,4 +1,6 @@
-project('sdl2', 'c', version : '2.0.3',
+project('sdl2', 'c',
+  version : '2.0.3',
+  license : 'zlib',
   default_options: ['c_std=gnu99'])
 
 varr = meson.project_version().split('.')
