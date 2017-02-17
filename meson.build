@@ -8,9 +8,11 @@ version_major = varr[0]
 version_minor = varr[1]
 version_micro = varr[2]
 
-core_deps = [find_library('m', required : false),
-  find_library('dl', required : false),
-  find_library('pthread', required : false),
+cc = meson.get_compiler('c')
+
+core_deps = [cc.find_library('m', required : false),
+  cc.find_library('dl', required : false),
+  cc.find_library('pthread', required : false),
 ]
 
 if host_machine.system() == 'darwin'
