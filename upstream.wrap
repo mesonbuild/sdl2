@@ -1,0 +1,7 @@
+[wrap-file]
+directory = SDL2-2.0.8
+
+source_url = https://libsdl.org/release/SDL2-2.0.8.zip
+source_filename = SDL2-2.0.8.zip
+source_hash = e6a7c71154c3001e318ba7ed4b98582de72ff970aca05abc9f45f7cbdc9088cb
+
