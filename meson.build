@@ -1,7 +1,7 @@
 project('sdl2', 'c',
   version : '2.0.3',
   license : 'zlib',
-  default_options: ['c_std=gnu99'])
+  default_options: [])
 
 varr = meson.project_version().split('.')
 version_major = varr[0]
@@ -183,8 +183,7 @@ elif host_machine.system() == 'windows'
   cdata.set('SDL_VIDEO_DRIVER_WINDOWS', 1)
   cdata.set('SDL_VIDEO_RENDER_D3D', 1)
   cdata.set('SDL_AUDIO_DRIVER_WINMM', 1)
-#  core_args += '
-  core_ldflags += ['winmm.lib', 'version.lib', 'imm32.lib']
+  core_deps += [cc.find_library('winmm'), cc.find_library('version'), cc.find_library('imm32')]
 elif host_machine.system() == 'darwin'
   cdata.set('HAVE_GCC_ATOMICS', 1)
   cdata.set('HAVE_GCC_SYNC_LOCK_TEST_AND_SET', 1)
@@ -273,10 +272,13 @@ sdl2main = static_library('sdl2main',
   c_args : core_args,
 )
 
-sdl2_dep = declare_dependency(link_with : sdl2,
-  include_directories : core_inc)
-sdl2main_dep = declare_dependency(link_with : sdl2main,
-  include_directories : core_inc)
+if host_machine.system() == 'windows'
+  sdl2_dep = declare_dependency(link_with : [sdl2, sdl2main],
+    include_directories : core_inc)
+else
+  sdl2_dep = declare_dependency(link_with : sdl2,
+    include_directories : core_inc)
+endif
 
 # disabled for now
 # subdir('test')
